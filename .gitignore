@@ -100,9 +100,12 @@ firebase.json
 
 
 # Android build artifacts
+.gradle/
 android-app/.gradle/
 android-app/build/
 android-app/app/build/
 android-app/local.properties
 *.apk
 *.aab
+*.jks
+*.keystore

@@ -16,11 +16,20 @@ android {
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "DEFAULT_BASE_URL", "\"http://10.0.2.2:8888/\"")
+        buildConfigField("String", "DEFAULT_BASE_URL", "\"http://192.168.0.102:8888/\"")
     }
 
     buildTypes {
+        signingConfigs {
+            create("release") {
+                storeFile = file("../release-keystore.jks")
+                storePassword = "password"
+                keyAlias = "releasekey"
+                keyPassword = "password"
+            }
+        }
         release {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
