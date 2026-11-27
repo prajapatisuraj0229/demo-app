@@ -1,0 +1,834 @@
+/*
+ * ═══════════════════════════════════════════════════════════════
+ *  DummyJSON — Premium Light Theme Override
+ *  Applied on top of the compiled styles.css / docs.css.
+ *  Goals:
+ *   • White/off-white backgrounds, navy text, soft-blue accents
+ *   • Inter font with clean visual hierarchy
+ *   • Reduced text clutter, simplified cards, cleaner spacing
+ *   • Fixed dropdown (no stray circular element)
+ *   • Redesigned pagination
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+/* ── 1. Inter Font ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900&display=swap');
+
+/* ── 2. CSS Design Tokens ──────────────────────────────────── */
+:root {
+  --bg-page:        #f8fafc;
+  --bg-card:        #ffffff;
+  --bg-hover:       #f1f5f9;
+  --border:         #e2e8f0;
+  --border-strong:  #cbd5e1;
+  --text-main:      #0f172a;
+  --text-nav:       #334155;
+  --text-muted:     #64748b;
+  --text-faint:     #94a3b8;
+  --accent:         #2563eb;    /* soft blue */
+  --accent-dark:    #1d4ed8;
+  --accent-light:   #dbeafe;
+  --accent-pale:    #eff6ff;
+  --navy:           #1e3a5f;
+  --shadow-xs:      0 1px 2px rgba(0,0,0,.04);
+  --shadow-sm:      0 1px 4px rgba(0,0,0,.07);
+  --shadow-md:      0 4px 12px rgba(0,0,0,.08);
+  --radius-sm:      6px;
+  --radius-md:      10px;
+  --radius-lg:      14px;
+  --radius-xl:      18px;
+}
+
+/* ── 3. Global Reset for Light Theme ───────────────────────── */
+html, body {
+  background-color: var(--bg-page) !important;
+  color: var(--text-main) !important;
+}
+
+body,
+body *,
+input,
+button,
+select,
+textarea,
+label {
+  font-family: 'Inter', 'DMSans', ui-sans-serif, system-ui, -apple-system, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Code blocks keep monospace */
+pre, code, kbd, samp,
+.json-code code,
+.json-code *,
+.res-tip .inline-code,
+pre code,
+.webhook-card__body code {
+  font-family: 'Courier New', Courier, 'JetBrains Mono', monospace !important;
+}
+
+/* ── 4. Navbar ─────────────────────────────────────────────── */
+.app-navbar {
+  background: rgba(248, 250, 252, 0.9) !important;
+  box-shadow: 0 1px 0 var(--border) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: none;
+}
+
+.app-navbar.active {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+.app-navbar .logo-title {
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  color: var(--text-main) !important;
+  text-decoration: none !important;
+}
+
+.app-navbar .nav-items li a {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: var(--text-nav) !important;
+  padding: 0.4375rem 0.875rem !important;
+  border-radius: var(--radius-sm) !important;
+  margin: 0 1px !important;
+  text-decoration: none !important;
+  transition: color 0.15s ease, background 0.15s ease !important;
+}
+
+.app-navbar .nav-items li a:hover {
+  color: var(--accent) !important;
+  background: var(--accent-pale) !important;
+  text-decoration: none !important;
+}
+
+/* Nav mobile drawer */
+.app-navbar .nav-items {
+  background-color: var(--bg-card) !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* ── 5. Banner ─────────────────────────────────────────────── */
+#banner {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+}
+
+#banner a, #banner .link {
+  color: #ffffff !important;
+}
+
+#banner code {
+  background: rgba(255,255,255,0.2) !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  padding: 1px 6px !important;
+}
+
+/* ── 6. Hero Sections ──────────────────────────────────────── */
+section {
+  background-color: var(--bg-page) !important;
+  /* remove coloured blurred blobs */
+}
+
+section::before,
+section::after {
+  display: none !important;
+}
+
+section .content h1,
+section .content h2 {
+  color: var(--text-main) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.15 !important;
+}
+
+section .content p {
+  color: var(--text-muted) !important;
+  font-size: 1.0625rem !important;
+  font-weight: 400 !important;
+  line-height: 1.65 !important;
+  max-width: 540px !important;
+}
+
+/* Remove duplicate/unnecessary descriptive paragraphs in hero */
+section:not(.resources):not(.tools-page) .content > h3 {
+  font-size: 0.9375rem !important;
+  font-weight: 500 !important;
+  color: var(--text-muted) !important;
+  letter-spacing: 0.01em !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Stats label */
+section .content .stats {
+  font-size: 0.8125rem !important;
+  color: var(--text-faint) !important;
+  margin-top: 1.25rem !important;
+  display: block !important;
+}
+
+section .content .stats strong {
+  color: var(--accent) !important;
+  font-weight: 700 !important;
+}
+
+/* ── 7. Buttons ────────────────────────────────────────────── */
+.btn {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  height: 42px !important;
+  padding: 0 1.375rem !important;
+  border-radius: var(--radius-md) !important;
+  border: 1.5px solid var(--border-strong) !important;
+  background: var(--bg-card) !important;
+  color: var(--text-main) !important;
+  box-shadow: var(--shadow-xs) !important;
+  letter-spacing: 0 !important;
+  transition: background 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease, transform 0.1s ease !important;
+  text-decoration: none !important;
+}
+
+/* Remove old neo-brutalist shadow */
+.btn::after { display: none !important; }
+
+.btn:hover {
+  background: var(--bg-hover) !important;
+  border-color: var(--border-strong) !important;
+  box-shadow: var(--shadow-sm) !important;
+  color: var(--text-main) !important;
+  text-decoration: none !important;
+}
+
+.btn.primary {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #ffffff !important;
+  box-shadow: 0 1px 4px rgba(37,99,235,0.3) !important;
+}
+
+.btn.primary:hover {
+  background: var(--accent-dark) !important;
+  border-color: var(--accent-dark) !important;
+  box-shadow: 0 3px 10px rgba(37,99,235,0.35) !important;
+  color: #fff !important;
+}
+
+.btn.secondary {
+  background: var(--accent-light) !important;
+  border-color: #93c5fd !important;
+  color: var(--navy) !important;
+}
+
+.btn.secondary:hover {
+  background: #bfdbfe !important;
+  color: var(--navy) !important;
+}
+
+.btn.disabled, .btn:disabled {
+  background: var(--bg-hover) !important;
+  border-color: var(--border) !important;
+  color: var(--text-faint) !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+}
+
+/* ── 8. Resources Section ──────────────────────────────────── */
+/* Resource cards — richer pastel variants */
+.resource.bg-1 { background-color: #eff6ff !important; }
+.resource.bg-2 { background-color: #f0fdf4 !important; }
+.resource.bg-3 { background-color: #f5f3ff !important; }
+.resource.bg-4 { background-color: #fff1f2 !important; }
+
+.resource a { color: var(--text-main) !important; }
+.resource h3 { color: var(--text-main) !important; font-weight: 700 !important; }
+.resource .url {
+  color: var(--text-muted) !important;
+  opacity: 1 !important;
+  font-size: 0.75rem !important;
+}
+
+/* Border on each resource card */
+.resource {
+  border-radius: 12px !important;
+  border: 1px solid var(--border) !important;
+  overflow: hidden !important;
+  transition: box-shadow 0.18s ease, transform 0.18s ease !important;
+}
+
+.resource:hover {
+  box-shadow: var(--shadow-md) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ── 9. Tool Cards ─────────────────────────────────────────── */
+.tool-card {
+  border-radius: var(--radius-lg) !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-sm) !important;
+  transition: box-shadow 0.2s ease, transform 0.2s ease !important;
+}
+
+.tool-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.tool-card__icon {
+  border: 1px solid var(--border) !important;
+  border-radius: 10px !important;
+}
+
+.tool-card__body h3 {
+  font-weight: 700 !important;
+  color: var(--text-main) !important;
+  font-size: 1.1rem !important;
+}
+
+.tool-card__desc {
+  color: var(--text-muted) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
+}
+
+/* ── 10. Sponsors / Featured Cards ────────────────────────── */
+.sponsors__card a {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-sm) !important;
+  color: var(--text-main) !important;
+  border-radius: var(--radius-lg) !important;
+  transition: box-shadow 0.2s ease, transform 0.2s ease !important;
+}
+
+.sponsors__card a:hover,
+.sponsors__card a:focus-visible {
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-md) !important;
+  border-color: var(--border-strong) !important;
+}
+
+.sponsors__card h3 {
+  color: var(--text-main) !important;
+  font-weight: 700 !important;
+}
+
+.sponsors__card p {
+  color: var(--text-muted) !important;
+}
+
+.sponsors__eyebrow { color: var(--text-faint) !important; }
+.sponsors__thanks  { color: var(--text-muted) !important; }
+
+.sponsors__avatars a {
+  border: 2px solid var(--border) !important;
+}
+
+/* ── 11. Tool Features (steps, faq) ───────────────────────── */
+.tool-features__item {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-sm) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+.tool-features__icon {
+  border: 1px solid var(--border) !important;
+}
+
+.tool-features__heading { color: var(--text-main) !important; }
+.tool-features__text   { color: var(--text-muted) !important; }
+
+.tool-steps__item { border-bottom-color: var(--border) !important; }
+
+.tool-steps__number {
+  background: var(--accent-light) !important;
+  border: 1.5px solid var(--border) !important;
+  color: var(--accent-dark) !important;
+  font-weight: 700 !important;
+}
+
+.tool-steps__heading { color: var(--text-main) !important; }
+.tool-steps__text   { color: var(--text-muted) !important; }
+
+.tool-faq__item {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: none !important;
+}
+
+.tool-faq__item[open] {
+  box-shadow: var(--shadow-sm) !important;
+  border-color: var(--border-strong) !important;
+}
+
+.tool-faq__question { color: var(--text-main) !important; font-weight: 600 !important; }
+.tool-faq__answer   { color: var(--text-muted) !important; }
+.tool-faq__answer code {
+  background: var(--bg-hover) !important;
+  color: var(--accent) !important;
+}
+
+/* ── 12. Dropdown / Selector Fix ──────────────────────────── */
+/* Remove the stray circular element that appears above dropdowns */
+.selector > span,
+.selector .circle,
+.selector::before {
+  display: none !important;
+}
+
+.resource-selector-el,
+.method-selector-el {
+  background-color: var(--bg-card) !important;
+  border: 1.5px solid var(--border-strong) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-main) !important;
+  font-family: 'Courier New', monospace !important;
+  box-shadow: var(--shadow-xs) !important;
+}
+
+.resource-selector-el label,
+.method-selector-el label {
+  color: var(--text-main) !important;
+  border-top-color: var(--border) !important;
+  font-family: 'Courier New', monospace !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6rem !important;
+  height: 1.6rem !important;
+}
+
+.resource-selector-el.expanded,
+.method-selector-el.expanded {
+  background: var(--bg-card) !important;
+  border-color: var(--border-strong) !important;
+  box-shadow: var(--shadow-md) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.resource-selector-el label:hover,
+.method-selector-el label:hover {
+  color: var(--accent) !important;
+  background: var(--accent-pale) !important;
+}
+
+/* Arrow indicator */
+.resource-selector-el::after {
+  border-color: var(--accent) transparent transparent transparent !important;
+}
+
+.method-selector-el::after {
+  border-color: var(--navy) transparent transparent transparent !important;
+}
+
+/* Code changer block */
+.changer {
+  background-color: var(--bg-hover) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-main) !important;
+}
+
+/* ── 13. Pagination ────────────────────────────────────────── */
+/* Shared pagination container used in docs */
+.pagination,
+nav[aria-label="pagination"],
+.page-nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.375rem !important;
+  margin: 2rem auto !important;
+  flex-wrap: wrap !important;
+}
+
+.pagination a,
+.pagination button,
+.pagination span,
+.page-nav a,
+.page-nav button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  padding: 0 0.625rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--bg-card) !important;
+  color: var(--text-nav) !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  transition: background 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease !important;
+  user-select: none !important;
+}
+
+.pagination a:hover,
+.pagination button:hover,
+.page-nav a:hover,
+.page-nav button:hover {
+  background: var(--accent-pale) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+/* Active page */
+.pagination a.active,
+.pagination a[aria-current="page"],
+.pagination .active,
+.page-nav .active {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  pointer-events: none !important;
+}
+
+/* Prev / Next buttons */
+.pagination a.prev, .pagination a.next,
+.pagination button.prev, .pagination button.next {
+  min-width: 72px !important;
+  gap: 0.25rem !important;
+  font-weight: 500 !important;
+}
+
+/* ── 14. Input Fields ──────────────────────────────────────── */
+.input-container input,
+input[type='text'],
+input[type='email'],
+input[type='number'] {
+  background: var(--bg-card) !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--text-main) !important;
+  font-weight: 400 !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+  box-shadow: var(--shadow-xs) !important;
+}
+
+.input-container input:focus,
+input[type='text']:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12) !important;
+  outline: none !important;
+}
+
+.input-container input::placeholder {
+  color: var(--text-faint) !important;
+  font-weight: 400 !important;
+}
+
+/* ── 15. Webhook Cards ─────────────────────────────────────── */
+.webhook-card {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.webhook-card__header {
+  background: var(--bg-hover) !important;
+  border-bottom-color: var(--border) !important;
+}
+
+.webhook-card__dropdown {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Remove old neo-brutalist border on dropdown */
+.webhook-card__dropdown {
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.webhook-card__dropdown button:hover {
+  background: var(--accent-pale) !important;
+  color: var(--accent) !important;
+}
+
+.webhook-card__dropdown button + button {
+  border-top-color: var(--border) !important;
+}
+
+.webhook-empty {
+  background: var(--bg-hover) !important;
+  border: 1.5px dashed var(--border-strong) !important;
+  color: var(--text-muted) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+.webhook-card__menu-btn {
+  color: var(--text-muted) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.webhook-card__menu-btn:hover {
+  background: var(--bg-hover) !important;
+  color: var(--text-main) !important;
+}
+
+.webhook-card__time { color: var(--text-faint) !important; }
+.webhook-card__request-id { color: var(--text-faint) !important; }
+.webhook-card__request-id::before { color: var(--border-strong) !important; }
+
+/* ── 16. Docs Section ──────────────────────────────────────── */
+/* Docs page border uses blue from primary — make it subtle */
+.docs-nav {
+  background: var(--bg-page) !important;
+  border-color: var(--border) !important;
+}
+
+.docs-nav .docs-menu li {
+  background-color: var(--bg-card) !important;
+  border-bottom-color: var(--border) !important;
+}
+
+.docs-nav .docs-menu li a {
+  color: var(--text-nav) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  padding: 0.625rem 0.875rem !important;
+  border-radius: var(--radius-sm) !important;
+  transition: color 0.15s ease, background 0.15s ease !important;
+}
+
+.docs-nav .docs-menu li a:hover,
+.docs-nav .docs-menu li a.active {
+  color: var(--accent) !important;
+  background: var(--accent-pale) !important;
+}
+
+.docs-nav .docs-menu li > a::after {
+  border-top-color: var(--text-muted) !important;
+  border-right-color: var(--text-muted) !important;
+}
+
+.docs-nav .docs-menu li > a:hover::after,
+.docs-nav .docs-menu li > a.active::after {
+  border-top-color: var(--accent) !important;
+  border-right-color: var(--accent) !important;
+}
+
+/* Docs main section */
+section.docs-section,
+section {
+  border-color: var(--border) !important;
+  border-width: 0 !important;   /* remove thick colour border */
+  background: var(--bg-page) !important;
+}
+
+/* Resource blocks */
+.resource.docs-resource,
+.content .resource {
+  border-bottom-color: var(--border) !important;
+}
+
+.content .res-title {
+  color: var(--text-main) !important;
+  font-weight: 700 !important;
+  font-size: 1.3125rem !important;
+}
+
+.content .res-title::after {
+  opacity: 0.4 !important;
+}
+
+.content .res-desc {
+  color: var(--text-muted) !important;
+  font-size: 0.9375rem !important;
+  line-height: 1.65 !important;
+}
+
+.content .res-tip {
+  background: #fffbeb !important;
+  border-left: 3px solid #f59e0b !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-main) !important;
+  padding: 0.875rem 1rem 0.875rem 2.25rem !important;
+}
+
+.content .res-tip .inline-code {
+  color: #b45309 !important;
+  background: rgba(245,158,11,0.12) !important;
+  border-color: rgba(245,158,11,0.3) !important;
+}
+
+/* Code blocks — keep dark for readability */
+pre code,
+.content pre code,
+.json-code code {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #334155 !important;
+  border-radius: var(--radius-md) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Show-output button */
+.show-output.btn {
+  font-size: 0.8125rem !important;
+  height: 32px !important;
+  padding: 0 0.875rem !important;
+}
+
+/* ── 17. Display Para ──────────────────────────────────────── */
+.display-para {
+  color: var(--text-muted) !important;
+  font-weight: 400 !important;
+  line-height: 1.65 !important;
+}
+
+/* ── 18. Docs title ────────────────────────────────────────── */
+.docs-title {
+  color: var(--text-main) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.025em !important;
+}
+
+/* ── 19. Social Links Footer ───────────────────────────────── */
+.social-links-container {
+  border-top: 1px solid var(--border) !important;
+  background: var(--bg-page) !important;
+}
+
+/* ── 20. 404 Page ──────────────────────────────────────────── */
+.page-404 { background: var(--bg-page) !important; }
+
+/* ── 21. Last Section (CTA) ────────────────────────────────── */
+section.last-section {
+  background: var(--bg-page) !important;
+}
+
+section.last-section .btn.primary {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+}
+
+section.last-section .gh-star-link {
+  color: var(--accent) !important;
+}
+
+/* ── 22. Arrow-down icon ───────────────────────────────────── */
+.arrow-down {
+  opacity: 0.3 !important;
+  filter: invert(1) !important;  /* make dark arrow visible on light bg */
+}
+
+/* ── 23. Heading stars — lighter on light bg ───────────────── */
+.heading-star {
+  opacity: 0.6 !important;
+}
+
+/* ── 24. Prettify button ───────────────────────────────────── */
+.prettify-btn {
+  background: rgba(255,255,255,0.08) !important;
+  border: 1px solid rgba(255,255,255,0.18) !important;
+  color: #94a3b8 !important;
+  font-size: 0.75rem !important;
+  border-radius: 4px !important;
+}
+
+/* ── 25. Req-body-helper bar ───────────────────────────────── */
+.req-body-helper {
+  background: #0f172a !important;
+}
+
+/* ── 26. Sponsors CTA button ───────────────────────────────── */
+.sponsors__cta {
+  font-size: 0.875rem !important;
+  height: 40px !important;
+  padding: 0 1.25rem !important;
+}
+
+/* ── 27. Tools page cards ──────────────────────────────────── */
+.tools-page .tool-card {
+  box-shadow: var(--shadow-sm) !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* ── 28. Whitespace tuning across sections ─────────────────── */
+section {
+  padding-top: 2rem !important;
+}
+
+section .content p {
+  margin-top: 0.75rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+section .content .btns-container {
+  margin-top: 1.75rem !important;
+  gap: 0.75rem !important;
+}
+
+/* ── 29. Mobile nav background fix ────────────────────────── */
+@media (max-width: 767px) {
+  .app-navbar .nav-items.active {
+    background: var(--bg-card) !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+}
+
+/* ── 30. TOTP timer ring ───────────────────────────────────── */
+.totp-timer__track { stroke: var(--border) !important; }
+.totp-timer__progress { stroke: var(--accent) !important; }
+.totp-timer__seconds { color: var(--accent) !important; }
+.totp-timer--urgent .totp-timer__progress { stroke: #ef4444 !important; }
+.totp-timer--urgent .totp-timer__seconds  { color: #ef4444 !important; }
+
+/* ── 31. Webhook expiry text ───────────────────────────────── */
+.webhook-expiry { color: var(--text-muted) !important; }
+.webhook-expiry--expired { color: #ef4444 !important; }
+
+/* ── 32. Misc: kbd, inline code ────────────────────────────── */
+kbd {
+  background: var(--bg-hover) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 4px !important;
+  padding: 1px 5px !important;
+  font-size: 0.8em !important;
+  color: var(--text-nav) !important;
+}
+
+/* ── 33. Docs page thick border → transparent ──────────────── */
+/* The EJS docs section has border: 5px solid primary-color-alpha */
+section[class],
+section:not([class]) {
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+}
+
+/* ── 34. Remove section background blobs entirely ──────────── */
+section::before { display: none !important; }
+
+/* ── 35. Smooth link colours ───────────────────────────────── */
+a:not(.btn):not(.logo-title) {
+  color: var(--accent) !important;
+  transition: color 0.15s ease !important;
+}
+
+a:not(.btn):not(.logo-title):hover {
+  color: var(--accent-dark) !important;
+  text-decoration: underline !important;
+}
